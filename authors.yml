@@ -1,0 +1,56 @@
+version: 1
+project:
+  id: aaa93d8b-b87b-406a-9a35-bce45f124075
+
+  affiliations:
+    - id: org_TUD
+      name: Delft University of Technology
+
+  authors: 
+    - id: FreekPols
+      name: Freek Pols
+      email: c.f.j.pols@tudelft.nl
+      orcid: 0000-0002-4690-6460
+      github: FreekPols
+      affiliations:
+        - id: org_TUD
+    - id: LuukFroling
+      name: Luuk Fröling
+      github: LuukFroling
+      affiliations:
+        - id: org_TUD
+    - id: SaulloCastro
+      name: Saullo Castro
+      email: S.G.P.Castro@tudelft.nl
+      orcid: 
+      github: saullocastro
+      affiliations:
+        - id: org_TUD
+    - id: IlkeErcan
+      name: Ilke Ercan
+      affiliations:
+        - id: org_TUD
+    - id: BaharehAbdi
+      name: Bahareh Abdi
+      affiliations:
+        - id: org_TUD
+    - id: GarySteele
+      name: Gary Steele
+      affiliations:
+        - id: org_TUD
+    - id: RolfHut
+      name: Rolf Hut
+      affiliations:
+        - id: org_TUD
+    - id: GeorgiosVarnavides
+      name: Georgios Varnavides
+      affiliations:
+        - id: org_TUD
+    - id: AntonAkhmerov
+      name: Anton Akhmerov
+      affiliations:
+        - id: org_TUD
+    - id: MaciejTopyla
+      name: Maciej Topyla
+      affiliations:
+        - id: org_TUD    

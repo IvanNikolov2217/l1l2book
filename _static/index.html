@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>λ Explorer — Ridge vs Lasso</title>
+  <link rel="stylesheet" href="lambda-explorer.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="lambda-explorer.js" defer></script>
+</head>
+<body>
+<section class="lambda-explorer" aria-labelledby="lambda-explorer-title">
+<div class="caption">Effect of λ on weight magnitudes</div>
+
+<div class="tab-row">
+  <button class="tab-btn active" id="mb-ridge" data-method="ridge">Ridge (L2)</button>
+  <button class="tab-btn" id="mb-lasso" data-method="lasso">Lasso (L1)</button>
+</div>
+
+<div class="chart-wrap">
+  <canvas id="lambdaChart" role="img" aria-label="Line chart showing how each weight changes as lambda increases, for both Ridge and Lasso regression.">Lambda explorer chart.</canvas>
+</div>
+
+<div class="insight" id="ridge-insight">
+  <strong>Ridge:</strong> All five weights shrink smoothly toward zero as λ increases, but none ever reach exactly zero. The model keeps all features — it just relies on them less heavily.
+</div>
+<div class="insight" id="lasso-insight">
+  <strong>Lasso:</strong> Weights snap to exactly zero one by one as λ grows. At λ = 0.1, two of the five features have been eliminated entirely. At λ = 1, only two remain. This is automatic feature selection.
+</div>
+
+<p class="note">
+  Switch between Ridge and Lasso to see the key difference: Ridge shrinks continuously, Lasso eliminates.
+</p>
+</section>
+</body>
+</html>

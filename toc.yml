@@ -1,0 +1,9 @@
+version: 1
+project:
+  id: aaa93d8b-b87b-406a-9a35-bce45f124075
+
+  toc:
+    - file: index.md
+    - file: content/introduction.md
+    - file: content/1_intro.md
+    - file: content/2_geometric.md

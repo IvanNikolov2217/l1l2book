@@ -1,0 +1,80 @@
+# $env:BASE_URL = "/manual"
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: aaa93d8b-b87b-406a-9a35-bce45f124075
+  title: L1 & L2 regularization in Machine Learning
+  description: This is a manual for open publishing with JupyterBook (2) for Delft University of Technology.
+  keywords: [Jupyter Book; Open Publishing; Open Education; Open Science]
+  github: https://github.com/TUD-JB-OS/book
+  date: 2026-06-01
+  plugins:
+    - https://github.com/jupyter-book/myst-plugins/releases/download/page-last-updatedv1.1/page-last-updated.mjs
+
+  references:
+    myst-guide: https://mystmd.org/guide
+    jb: https://jupyterbook.org/
+    MC: https://freekpols.github.io/Mechanica
+    WS: https://jupyter-book.github.io/workshop-template/
+
+  jupyter:
+    binder:
+      repo: https://github.com/executablebooks/thebe-binder-base
+  execute:
+    execute_notebooks: true
+  static:
+    - style
+
+extends:
+  - authors.yml
+  # - export/export.yml
+  - toc.yml
+
+site:
+  template: book-theme
+  options:
+    style: style/custom.css
+    # style: style/lambda-explorer-widget.css
+    hide_authors: true
+    favicon: style/favicon.ico
+    logo: style/tudelft.png
+    logo_dark: style/tudelft-dark.png
+    logo_url: https://jboss.tudelft.nl
+    folders: true
+
+  parts:
+    footer: style/footer.md
+
+sphinx:
+  config:
+    html_static_path: ["_static"]
+    html_css_files:
+      - test.css
+      - l1-l2-widget.css
+      - test-widget.css
+      - lambda-explorer.css
+      - lambda-explorer-widget.css
+      - regularization-slider.css
+    html_js_files:
+      - l1-l2-widget.js
+      - test-widget.js
+      - lambda-explorer.js
+      - lambda-explorer-widget.js
+      - counter.js
+      - regularization-slider.js
+
+  nav:
+    - title: Manual
+      children:
+        - title: Introductionsdadasda
+          url: /content/general/intro
+        - title: Scientific publishing
+          url: /content/science/intro
+        - title: Educational publishing
+          url: /content/education/intro
+    - title: Starter kit
+      url: https://jboss.tudelft.nl/starterkit
+    - title: Templates
+      url: https://jboss.tudelft.nl/templates/
+    - title: OS Meeting Delft
+      url: https://jboss.tudelft.nl/osmeeting
