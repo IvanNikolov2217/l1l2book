@@ -45,6 +45,8 @@ Throughout this tutorial we predict **salary (in \$'000s)** from **age**, using 
 
 <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=4.85,52.35,4.95,52.40" width="320" height="200" style="border:1px solid #ccc;"></iframe>
 
+<iframe src="https://ivannikolov2217.github.io/l1l2book/public/counter.html" width="320" height="140" style="border:1px solid #ccc;"></iframe>
+
 ### Try it: Interactive Regularization Strength
 
 Adjust the slider below to see how increasing the regularization strength (λ) shrinks the model weights:
