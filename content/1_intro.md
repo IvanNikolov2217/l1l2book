@@ -21,64 +21,38 @@ Penalizes the **absolute value** of each weight. Some weights are forced to exac
 ::::
 
 :::{note} The running example
-Throughout this tutorial we predict **salary (in \$'000s)** from **age**, using a 5th-degree polynomial fitted to 10 training examples. This model overfits badly — as you will see below. Regularization will show us how to fix it.
+Throughout this tutorial we predict **salary (in \$k)** from **age**, using a 5th-degree polynomial fitted to 10 training examples. This model overfits badly — as you will see below. Regularization will show us how to fix it.
 :::
-
-```{raw} html
-<div id="counter-widget" style="border:1px solid #ccc;padding:0.6rem;display:inline-block;">
-  <p style="margin:0 0 0.4rem 0;">Counter: <strong id="count">0</strong></p>
-  <button id="dec">−</button>
-  <button id="inc">+</button>
-  <button id="reset">Reset</button>
-</div>
-<script>
-(function(){
-  let n=0;
-  var el=document.getElementById('count');
-  var upd=function(){ if(el) el.textContent=n; };
-  document.getElementById('inc').addEventListener('click',function(){n++;upd();});
-  document.getElementById('dec').addEventListener('click',function(){n--;upd();});
-  document.getElementById('reset').addEventListener('click',function(){n=0;upd();});
-})();
-</script>
-```
-
-<iframe src="https://www.openstreetmap.org/export/embed.html?bbox=4.85,52.35,4.95,52.40" width="320" height="200" style="border:1px solid #ccc;"></iframe>
-
-<iframe src="https://ivannikolov2217.github.io/l1l2book/public/counter.html" width="320" height="140" style="border:1px solid #ccc;"></iframe>
-
-### Try it: Interactive Regularization Strength
-
-Adjust the slider below to see how increasing the regularization strength (λ) shrinks the model weights:
-
----
 
 ## Step 1 — The Example
 
 _Predicting salary from age — the data and the fitted model_
 
-We have 10 observations. Each person has a known age ($x$) and salary ($y$, in \$'000s). The goal is to learn a model that predicts salary from age for new individuals it hasn't seen before.
+We have 10 observations. Each person has a known age ($x$) and salary ($y$, in \$k). The goal is to learn a model that predicts salary from age for new individuals it hasn't seen before.
 
-| Instance | Age ($x$) | Salary $y$ (\$'000) |
-| :------: | --------: | ------------------: |
-|    1     |        25 |                  85 |
-|    2     |        55 |                 280 |
-|    3     |        27 |                  90 |
-|    4     |        35 |                 130 |
-|    5     |        60 |                 250 |
-|    6     |        65 |                 240 |
-|    7     |        45 |                 220 |
-|    8     |        40 |                 180 |
-|    9     |        50 |                 270 |
-|    10    |        30 |                 110 |
+```{table} Training data — age and salary for 10 individuals. Salary in $k.
+:label: tbl-training
+:align: center
 
-: Training data — age and salary for 10 individuals
+| Instance | Age ($x$) | Salary $y$ (\$k) |
+| :------: | --------: | ---------------: |
+|    1     |        25 |              85k |
+|    2     |        27 |              90k |
+|    3     |        30 |             110k |
+|    4     |        35 |             130k |
+|    5     |        40 |             180k |
+|    6     |        45 |             220k |
+|    7     |        65 |             240k |
+|    8     |        60 |             250k |
+|    9     |        50 |             270k |
+|    10    |        55 |             280k |
+```
 
 Looking at the data, salary appears to rise with age but levels off — suggesting a curved relationship. To capture this, we fit a **5th-degree polynomial**: a model with five features $x, x^2, x^3, x^4$, and $x^5$. A linear model makes predictions as a weighted sum of its features:
 
 ```{math}
 :label: linear-model
-\hat{y} = a + w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4 + w_5 x_5
+\hat{y} = b + w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4 + w_5 x_5
 ```
 
 Here $a$ is the bias (intercept), $w_1 \ldots w_5$ are the weights, and $x_1 = x,\ x_2 = x^2,\ x_3 = x^3,\ x_4 = x^4,\ x_5 = x^5$.
@@ -88,7 +62,7 @@ To fit the model, we minimize the **mean squared error (MSE)** — the average s
 ```{math}
 :label: mse
 \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
-           = \frac{1}{n} \sum_{i=1}^{n} (y_i - a - w_1 x_{1i} - \cdots - w_5 x_{5i})^2
+           = \frac{1}{n} \sum_{i=1}^{n} (y_i - b - w_1 x_{1i} - \cdots - w_5 x_{5i})^2
 ```
 
 We find the values of $a, w_1, w_2, w_3, w_4, w_5$ that make this as small as possible.
@@ -125,7 +99,7 @@ Ridge regression modifies the objective function by adding a term that grows wit
 
 ```{math}
 :label: ridge
-\frac{1}{n} \sum_{i=1}^{n}(y_i - a - w_1 x_{1i} - \cdots - w_5 x_{5i})^2
+\frac{1}{n} \sum_{i=1}^{n}(y_i - b - w_1 x_{1i} - \cdots - w_5 x_{5i})^2
 \;+\; \lambda \sum_{j=1}^{5} w_j^2
 ```
 
@@ -137,17 +111,24 @@ Squaring makes the penalty grow very fast as weights get larger. A weight of 100
 
 The table below shows how the weights change as we increase $\lambda$. Notice how moving from $\lambda = 0$ (no regularization) to even a small $\lambda = 0.02$ dramatically shrinks the weights from the tens of thousands down to double figures.
 
-| $\lambda$ | $a$ (bias) | $w_1\ (x)$ | $w_2\ (x^2)$ | $w_3\ (x^3)$ | $w_4\ (x^4)$ | $w_5\ (x^5)$ |
+```{table} Ridge regression — bias and weights for different $\lambda$ values. Salary in $k.
+:label: tbl-ridge
+:align: center
+
+| $\lambda$ | $b$ (bias) | $w_1\ (x)$ | $w_2\ (x^2)$ | $w_3\ (x^3)$ | $w_4\ (x^4)$ | $w_5\ (x^5)$ |
 | --------: | ---------: | ---------: | -----------: | -----------: | -----------: | -----------: |
 |  0 (none) |      216.5 |    −32,623 |      135,403 |     −215,493 |      155,315 |      −42,559 |
 |      0.02 |      216.5 |       97.8 |         36.6 |         −8.5 |        −35.0 |        −44.6 |
 |      0.10 |      216.5 |       56.5 |         28.1 |          3.7 |        −15.1 |        −28.4 |
-
-: Ridge regression — bias and weights for different $\lambda$ values. Salary in \$'000s.
+```
 
 **Observe:** All weights shrink toward zero as $\lambda$ increases, but _none of them ever reach exactly zero_. Ridge keeps all five features in the model, just with smaller coefficients. The bias $a = 216.5$ stays unchanged — it is not regularized.
 
-![](../style/image3.png)
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-ridge(1).html" width="120%" height="500" style="border:1px solid #ccc; display:block;" scrolling="no"></iframe>
+
+:::{tip} Try it: Interactive Regularization Strength
+Use the widget above to vary $\lambda$ and watch the Ridge weights shrink smoothly toward zero.
+:::
 
 ---
 
@@ -159,7 +140,7 @@ Lasso (Least Absolute Shrinkage and Selection Operator) uses a similar idea, but
 
 ```{math}
 :label: lasso
-\frac{1}{n} \sum_{i=1}^{n}(y_i - a - w_1 x_{1i} - \cdots - w_5 x_{5i})^2
+\frac{1}{n} \sum_{i=1}^{n}(y_i - b - w_1 x_{1i} - \cdots - w_5 x_{5i})^2
 \;+\; \lambda \sum_{j=1}^{5} |w_j|
 ```
 
@@ -171,17 +152,24 @@ The absolute value function has a sharp "kink" at zero — its gradient is disco
 
 This property makes Lasso a powerful tool for **automatic feature selection**: it discovers which features are truly useful and eliminates the rest completely.
 
-| $\lambda$ | $a$ (bias) | $w_1\ (x)$ | $w_2\ (x^2)$ | $w_3\ (x^3)$ | $w_4\ (x^4)$ | $w_5\ (x^5)$ |
+```{table} Lasso regression — bias and weights for different $\lambda$ values. Salary in $k. Bold zeros = weight eliminated.
+:label: tbl-lasso
+:align: center
+
+| $\lambda$ | $b$ (bias) | $w_1\ (x)$ | $w_2\ (x^2)$ | $w_3\ (x^3)$ | $w_4\ (x^4)$ | $w_5\ (x^5)$ |
 | --------: | ---------: | ---------: | -----------: | -----------: | -----------: | -----------: |
 |      0.02 |      216.5 |     −646.4 |      2,046.6 |        **0** |     −3,351.0 |      2,007.9 |
 |      0.10 |      216.5 |      355.4 |        **0** |       −494.8 |        **0** |        196.5 |
 |      1.00 |      216.5 |      147.4 |        **0** |        **0** |        −99.3 |        **0** |
-
-: Lasso regression — bias and weights for different $\lambda$ values. Salary in \$'000s. Bold zeros = weight eliminated.
+```
 
 **Note:** The pattern of zeros is perhaps surprising — you might expect Lasso to simply remove the highest-order terms first. In practice, the optimizer finds a different solution. What matters is that _as $\lambda$ grows, fewer and fewer features are kept_, and the model becomes progressively simpler.
 
-![](../style/image2.png)
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-lasso(1).html" width="320" height="140" style="border:1px solid #ccc;"></iframe>
+
+:::{tip} Try it: Interactive Regularization Strength
+Use the widget above to vary $\lambda$ and watch Lasso snap individual weights to exactly zero.
+:::
 
 ---
 
@@ -195,14 +183,11 @@ The parameter $\lambda$ is a **hyperparameter**: it controls how strongly the mo
 
 Use the controls below to compare Ridge and Lasso regularization.
 
-<div id="js-counter" style="border:1px solid #ccc;padding:0.6rem;display:inline-block;margin:0.5rem 0;">
-<p style="margin:0 0 0.4rem 0;">Counter: <strong id="count">0</strong></p>
-<button id="dec">−</button>
-<button id="inc">+</button>
-<button id="reset">Reset</button>
-</div>
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-lambda-explorer(1).html" width="320" height="140" style="border:1px solid #ccc;"></iframe>
 
-![](../style/image.png)
+:::{tip} Try it: Interactive Regularization Strength
+Use the widget above to compare how Ridge and Lasso respond to changing $\lambda$ side by side.
+:::
 
 ::::{grid} 2
 :::{card} $\lambda$ too small (near zero)
@@ -221,8 +206,6 @@ $$
 \text{Training: minimize} \quad \text{MSE} + \lambda \cdot \text{penalty}(\mathbf{w})
 $$
 
-$$
-
 Once the model is trained, predictions are made using the standard formula without the penalty term.
 :::
 
@@ -234,6 +217,10 @@ Once the model is trained, predictions are made using the standard formula witho
 
 Both methods add a penalty to the loss function to encourage smaller weights, but they differ in an important way.
 
+```{table} Comparison of Ridge (L2) and Lasso (L1) regularization.
+:label: tbl-summary
+:align: center
+
 |                       | **Ridge (L2)**                                         | **Lasso (L1)**                                  |
 | --------------------- | ------------------------------------------------------ | ----------------------------------------------- |
 | **Penalty**           | $\lambda \sum w_j^2$                                   | $\lambda \sum \|w_j\|$                          |
@@ -242,4 +229,4 @@ Both methods add a penalty to the loss function to encourage smaller weights, bu
 | **Best for**          | Many features that all contribute; correlated features | Many features, most of which are irrelevant     |
 | **Can be solved**     | Analytically (closed form) or gradient descent         | Gradient descent only (not analytically)        |
 | **Also known as**     | Tikhonov regression                                    | Least Absolute Shrinkage and Selection Operator |
-$$
+```

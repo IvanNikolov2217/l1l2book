@@ -15,7 +15,7 @@ no-update-date: true
 
 ## L1 & L2 Regularization in Machine Learning
 
-![](style/cover2.png)
+![](style/cover4.png)
 +++
 
 ## About this material

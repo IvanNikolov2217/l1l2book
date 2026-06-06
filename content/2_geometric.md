@@ -70,6 +70,8 @@ The contours are typically ellipses centered on the **unregularized optimum** $\
 Each ellipse is one "elevation" of training error. The center has the lowest error. Moving outward, each ellipse marks a higher error level. The unregularized solution sits at the center; any regularized solution will be pulled away from it toward the origin.
 :::
 
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-loss-contours(1).html" width="100%" height="520" frameborder="0" scrolling="no"></iframe>
+
 **Observe:** Without regularization, the model simply picks the center point. With regularization, it must stay within an allowed region — and the boundary of that region determines where the solution lands.
 
 ---
@@ -117,6 +119,8 @@ This is a **circle** centered at the origin. Every point inside the circle satis
 
 The regularized solution is the point where the smallest possible loss ellipse first touches the circle.
 
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-region-l2(1).html" width="100%" height="480" style="border:0; display:block; background:transparent;" scrolling="no"></iframe>
+
 **Observe:** A circle is smooth — it has no special points on the axes. The loss ellipse can touch the circle almost anywhere, and in general it does so at a point where both $w_1 \neq 0$ and $w_2 \neq 0$.
 
 ```{math}
@@ -161,6 +165,8 @@ w_1 = 0 \quad \text{or} \quad w_2 = 0
 The absolute value function $|w|$ has a sharp kink at $w = 0$ — its derivative is $-1$ for negative values and $+1$ for positive values, with no defined derivative at zero. This kink is what creates the corners of the diamond. It is also why Lasso cannot be minimized analytically — the loss surface is not smooth everywhere.
 :::
 
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-region-l1(1).html" width="100%" height="480" style="border:0; display:block; background:transparent;" scrolling="no"></iframe>
+
 **Observe:** The closer the unregularized optimum is to one of the axes, the more likely the loss contour is to hit a corner first. In practice, with many features, some of them genuinely unimportant, this happens frequently — Lasso naturally zeroes out the weights that contribute least.
 
 ---
@@ -168,6 +174,8 @@ The absolute value function $|w|$ has a sharp kink at $w = 0$ — its derivative
 ## Step 6 — Side by Side
 
 _The shape determines the behaviour_
+
+<iframe src="https://ivannikolov2217.github.io/widgets/widget-constraint-region(1).html" width="100%" height="560" style="border:0; display:block; background:transparent;" scrolling="no"></iframe>
 
 The entire difference between Ridge and Lasso comes down to the shape of the constraint region.
 
