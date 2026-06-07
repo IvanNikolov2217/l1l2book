@@ -22,7 +22,7 @@ no-update-date: true
 
 These teaching materials were produced as part of the CSE3000 Research Project at the Faculty of Electrical Engineering, Mathematics and Computer Science (EEMCS), Delft University of Technology.
 
-The goal is to give students a clear, accessible entry point into regularization — one of the most practically important ideas in supervised machine learning. The tutorial walks through Ridge (L2) and Lasso (L1) regression in detail, building from first principles. Readers are expected to have seen linear models and loss functions before, but no prior exposure to regularization is assumed.
+The goal is to give students a clear, accessible entry point into regularization - one of the most practically important ideas in supervised machine learning. The tutorial walks through Ridge (L2) and Lasso (L1) regression in detail, building from first principles. Readers are expected to have seen linear models and loss functions before, but no prior exposure to regularization is assumed.
 
 ## Contact
 
