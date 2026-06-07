@@ -122,7 +122,7 @@ The table below shows how the weights change as we increase $\lambda$. Notice ho
 |      0.10 |      216.5 |       56.5 |         28.1 |          3.7 |        −15.1 |        −28.4 |
 ```
 
-**Observe:** All weights shrink toward zero as $\lambda$ increases, but _none of them ever reach exactly zero_. Ridge keeps all five features in the model, just with smaller coefficients. The bias $a = 216.5$ stays unchanged - it is not regularized.
+**Observe:** All weights shrink toward zero as $\lambda$ increases, but _none of them ever reach exactly zero_. Ridge keeps all five features in the model, just with smaller coefficients. The bias $b = 216.5$ stays unchanged - it is not regularized.
 
 <iframe src="https://ivannikolov2217.github.io/widgets/widget-ridge(1).html" width="120%" height="500" style="border:1px solid #ccc; display:block;" scrolling="no"></iframe>
 
