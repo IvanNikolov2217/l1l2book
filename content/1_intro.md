@@ -13,10 +13,10 @@ Regularization addresses this by adding a **penalty term** to the loss function.
 
 ::::{grid} 2
 :::{card} Ridge - L2
-Penalizes the **square** of each weight. All weights shrink toward zero, but none are forced to be exactly zero. Good when all features contribute something.
+Penalizes the **square** of each weight, via the term $\lambda \sum_j w_j^2$. All weights shrink toward zero, but none are forced to be exactly zero. Good when all features contribute something.
 :::
 :::{card} Lasso - L1
-Penalizes the **absolute value** of each weight. Some weights are forced to exactly zero. Performs automatic feature selection - particularly useful with many features.
+Penalizes the **absolute value** of each weight, via the term $\lambda \sum_j |w_j|$. Some weights are forced to exactly zero. Performs automatic feature selection - particularly useful with many features.
 :::
 ::::
 
@@ -55,7 +55,7 @@ Looking at the data, salary appears to rise with age but levels off - suggesting
 \hat{y} = b + w_1 x_1 + w_2 x_2 + w_3 x_3 + w_4 x_4 + w_5 x_5
 ```
 
-Here $a$ is the bias (intercept), $w_1 \ldots w_5$ are the weights, and $x_1 = x,\ x_2 = x^2,\ x_3 = x^3,\ x_4 = x^4,\ x_5 = x^5$.
+Here $b$ is the bias (intercept), $w_1 \ldots w_5$ are the weights, and $x_1 = x,\ x_2 = x^2,\ x_3 = x^3,\ x_4 = x^4,\ x_5 = x^5$.
 
 To fit the model, we minimize the **mean squared error (MSE)** - the average squared gap between true salaries and predicted salaries across all 10 training examples:
 
@@ -103,7 +103,7 @@ Ridge regression modifies the objective function by adding a term that grows wit
 \;+\; \lambda \sum_{j=1}^{5} w_j^2
 ```
 
-The second term penalizes large weights. $\lambda$ controls how strong the penalty is. The bias $a$ is not penalized.
+The second term penalizes large weights. $\lambda$ controls how strong the penalty is. The bias $b$ is not penalized.
 
 :::{note} Why does squaring the weights work?
 Squaring makes the penalty grow very fast as weights get larger. A weight of 100 incurs a penalty 100× bigger than a weight of 10. This strongly encourages the optimizer to find solutions with small, balanced weights - which tend to produce smoother, more generalizable predictions.
@@ -145,10 +145,6 @@ Lasso (Least Absolute Shrinkage and Selection Operator) uses a similar idea, but
 ```
 
 The penalty is now the sum of the absolute values of the weights. This has a very different geometric effect to L2.
-
-:::{note} Why does Lasso set weights to exactly zero?
-The absolute value function has a sharp "kink" at zero - its gradient is discontinuous there. Geometrically, the L1 penalty has corners that align with the axes. The optimal solution is often found exactly at one of these corners, where some weights are _exactly_ zero. L2 (Ridge) has a smooth, round penalty - the optimal solution typically lies on its surface away from the axes, so weights get small but not zero.
-:::
 
 This property makes Lasso a powerful tool for **automatic feature selection**: it discovers which features are truly useful and eliminates the rest completely.
 
@@ -194,7 +190,7 @@ Use the widget above to compare how Ridge and Lasso respond to changing $\lambda
 The penalty is weak. The model behaves almost like standard regression - it can still overfit.
 :::
 :::{card} $\lambda$ too large
-All weights are pushed toward zero. The model predicts close to the bias $a$ for every input - it underfits and is useless.
+All weights are pushed toward zero. The model predicts close to the bias $b$ for every input - it underfits and is useless.
 :::
 ::::
 
